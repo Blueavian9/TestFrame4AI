@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Fetch Results</title>
+</head>
+
+<body>
+    <h1>Results</h1>
+    <ul id="results-list"></ul>
+
+    <script>
+        // Function to fetch results from the server
+        async function fetchResults() {
+            try {
+                const response = await fetch('http://localhost:3000/api/results');
+                const results = await response.json();
+                displayResults(results);
+            } catch (error) {
+                console.error('Error fetching results:', error);
+            }
+        }
+
+        // Function to display results in the HTML
+        function displayResults(results) {
+            const resultsList = document.getElementById('results-list');
+            resultsList.innerHTML = ''; // Clear previous results
+
+            results.forEach(result => {
+                const listItem = document.createElement('li');
+                listItem.textContent = result.name;
+                resultsList.appendChild(listItem);
+            });
+        }
+
+        // Fetch results when the page loads
+        window.onload = fetchResults;
+    </script>
+</body>
+
+</html>
